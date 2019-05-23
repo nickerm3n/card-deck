@@ -1,0 +1,160 @@
+
+.board-container {
+  max-width: 1350px;
+  border: 1px solid;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 50px;
+  background: url('../images/board.jpg'), rgba(0,0,0,.5) top center;
+  padding: 20px 50px;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, .5);
+}
+
+
+
+.flip-card {
+  background-color: transparent;
+  width:120px;
+  height:200px;
+  margin-bottom: 25px;
+  perspective: 1000px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all .3s ease-in-out;
+  
+  &.active {
+    @include pos($pos:fixed, $t:0, $l:0, $r:0, $b:0);
+    margin:auto;
+    transform: scale(1.5);
+    z-index: 999;
+    animation: 3s linear 1s 1;
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: scale(1) rotateZ(0);
+  }
+  
+  70% {transform: scale(1.3)}
+
+  100%{
+    transform: scale(1.8 rotateZ(90deg));
+    }
+}
+
+.flip-card__layout {
+  @include pos($pos:fixed, $l:0, $r:0, $t:0, $b:0);
+  background: rgba(0, 0, 0, .8);
+  z-index: 99;
+  display: none;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  
+
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+
+.flip-card-back {
+  background-color: white;
+  color: #000;
+  transform: rotateY(180deg);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &.red {
+    color: red;
+  }
+
+  &.black {
+    color: black;
+  }
+
+  &__suit {
+    font-size: 80px;
+  }
+
+
+  &.heart {
+    &::before, &::after {
+      content: '♥';
+    }
+  }
+
+  &.diamond {
+    &::before, &::after {
+      content: '♦';
+    }
+  }
+
+  &.club {
+    &::before, &::after {
+      content: '♣';
+    }
+  }
+
+  &.spade {
+    &::before, &::after {
+      content: '♠';
+    }
+  }
+
+
+
+  &.heart, &.diamond, &.club, &.spade {
+    &::before, &::after {
+      font-size: 30px
+    }
+
+    &::before {
+     @include pos($t:35px, $l:17px);
+   }
+
+   &::after {
+     @include pos($b:35px, $r:17px);
+     transform: rotate(180deg) 
+   }
+ }
+
+
+&__value-top {
+  @include pos($t:20px, $l:20px);
+}
+
+
+&__value-bottom {
+  @include pos($b:20px, $r:20px);
+  transform: rotate(180deg) 
+}
+
+}
